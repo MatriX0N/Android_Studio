@@ -11,9 +11,11 @@ class CalculatorActivity : AppCompatActivity() {
 
     private lateinit var textView: TextView
     private lateinit var editText: EditText
+    private lateinit var historyTextView: TextView
 
     private var operand1: Int = 0
     private var operator: String? = null
+    private var history: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +23,7 @@ class CalculatorActivity : AppCompatActivity() {
 
         textView = findViewById(R.id.textView)
         editText = findViewById(R.id.editText)
+        historyTextView = findViewById(R.id.historyTextView)
 
         val button1: Button = findViewById(R.id.button1)
         val button2: Button = findViewById(R.id.button2)
@@ -37,6 +40,7 @@ class CalculatorActivity : AppCompatActivity() {
         val button13: Button = findViewById(R.id.button13)
         val button14: Button = findViewById(R.id.button14)
         val button15: Button = findViewById(R.id.button15)
+        val buttonClear: Button = findViewById(R.id.buttonClear)
 
         val numberButtons = listOf(
             button0,
@@ -73,6 +77,12 @@ class CalculatorActivity : AppCompatActivity() {
             performOperation("/")
         }
 
+        buttonClear.setOnClickListener {
+            editText.setText("")
+            textView.text = ""
+            operator = ""
+        }
+
     }
 
     private fun performOperation(newOperator: String) {
@@ -84,6 +94,12 @@ class CalculatorActivity : AppCompatActivity() {
             "-" -> operand1 -= input
             "*" -> operand1 *= input
             "/" -> operand1 /= input
+        }
+
+        if (newOperator == "=") {
+            // Додайте результат до історії
+            history += "${operand1}\n"
+            historyTextView.text = history
         }
         operator = newOperator
         textView.text = operand1.toString()
