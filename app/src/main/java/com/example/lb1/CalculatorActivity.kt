@@ -5,22 +5,27 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class CalculatorActivity : AppCompatActivity() {
 
     private lateinit var textView: TextView
     private lateinit var editText: EditText
+    private lateinit var historyTextView: TextView
 
     private var operand1: Int = 0
     private var operator: String? = null
+    private var history: String = ""
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.calculator_activity)
 
         textView = findViewById(R.id.textView)
         editText = findViewById(R.id.editText)
+        historyTextView = findViewById(R.id.historyTextView)
 
         val button1: Button = findViewById(R.id.button1)
         val button2: Button = findViewById(R.id.button2)
@@ -37,6 +42,7 @@ class CalculatorActivity : AppCompatActivity() {
         val button13: Button = findViewById(R.id.button13)
         val button14: Button = findViewById(R.id.button14)
         val button15: Button = findViewById(R.id.button15)
+        val buttonClear: Button = findViewById(R.id.buttonclear)
 
         val numberButtons = listOf(
             button0,
@@ -72,7 +78,11 @@ class CalculatorActivity : AppCompatActivity() {
         button15.setOnClickListener {
             performOperation("/")
         }
-
+        buttonClear.setOnClickListener {
+            editText.setText("")
+            textView.text = ""
+            operand1 = 0
+        }
     }
 
     private fun performOperation(newOperator: String) {
@@ -83,8 +93,20 @@ class CalculatorActivity : AppCompatActivity() {
             "+" -> operand1 += input
             "-" -> operand1 -= input
             "*" -> operand1 *= input
-            "/" -> operand1 /= input
+            "/" ->
+                if(input==0){
+                    Toast.makeText(this, "Ділитит на нуль не можна!", Toast.LENGTH_SHORT).show()
+
+                }else{
+                operand1 /= input}
         }
+
+        if (newOperator == "=") {
+            // Додайте результат до історії
+            history += "${operand1}\n"
+            historyTextView.text = history
+        }
+
         operator = newOperator
         textView.text = operand1.toString()
         editText.text.clear()
