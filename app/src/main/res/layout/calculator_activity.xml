@@ -12,8 +12,23 @@
         android:text="Вітаю в практичні роботі 2"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintVertical_bias="0.313"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/historyTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Історія"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button11"
+        app:layout_constraintVertical_bias="0.778"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -21,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
+        android:maxLength="5"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -236,4 +252,16 @@
         app:layout_constraintTop_toTopOf="@+id/button12"
         app:layout_constraintVertical_bias="0.2"
         tools:ignore="UnknownIdInLayout" />
+
+    <Button
+        android:id="@+id/buttonClear"
+        android:layout_width="400px"
+        android:layout_height="100px"
+        app:layout_constraintBottom_toTopOf="@+id/historyTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="clear"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button11" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
