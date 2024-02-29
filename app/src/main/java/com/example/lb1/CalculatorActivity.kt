@@ -86,29 +86,39 @@ class CalculatorActivity : AppCompatActivity() {
     }
 
     private fun performOperation(newOperator: String) {
-        val input = editText.text.toString().toInt()
-        when (operator) {
-            null -> operand1 = input
-            "=" -> operand1 = input
-            "+" -> operand1 += input
-            "-" -> operand1 -= input
-            "*" -> operand1 *= input
-            "/" ->
-                if(input==0){
-                    Toast.makeText(this, "Ділитит на нуль не можна!", Toast.LENGTH_SHORT).show()
+        val inputText = editText.text.toString()
+        if (inputText.isNotEmpty()) {
+            val input = inputText.toInt()
 
-                }else{
-                operand1 /= input}
+            when (operator) {
+                null -> operand1 = input
+                "=" -> operand1 = input
+                "+" -> operand1 += input
+                "-" -> operand1 -= input
+                "*" -> operand1 *= input
+                "/" -> {
+                    // Перевірка ділення на нуль
+                    if (input == 0) {
+                        Toast.makeText(this, "Ділити на нуль не можна!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        operand1 /= input
+                    }
+                }
+            }
+
+            if (newOperator == "=") {
+                // Додайте результат до історії
+                history += "${operand1}\n"
+                historyTextView.text = history
+            }
+
+            operator = newOperator
+            textView.text = operand1.toString()
+            editText.text.clear()
+        } else {
+            // Введення порожнє, можна вивести повідомлення або взяти додаткові заходи за необхідності
+            Toast.makeText(this, "Будь ласка, введіть число", Toast.LENGTH_SHORT).show()
         }
-
-        if (newOperator == "=") {
-            // Додайте результат до історії
-            history += "${operand1}\n"
-            historyTextView.text = history
-        }
-
-        operator = newOperator
-        textView.text = operand1.toString()
-        editText.text.clear()
     }
+
 }
